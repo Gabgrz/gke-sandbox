@@ -75,7 +75,6 @@ module "vpc" {
       },
       {
         range_name    = var.ip_range_services
-        ip_cidr_range = "192.168.64.0/18"
       },
     ]
   }
@@ -93,8 +92,8 @@ module "gke" {
   name                        = "${local.cluster_type}-cluster${var.cluster_name_suffix}"
   regional                    = true
   region                      = var.region
-  network                     = module.vpc.network
-  subnetwork                  = module.vpc.subnets[0]
+  network                     = var.network
+  subnetwork                  = var.subnetwork
   ip_range_pods               = var.ip_range_pods
   ip_range_services           = var.ip_range_services
   create_service_account      = false
