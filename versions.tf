@@ -23,5 +23,9 @@ terraform {
       source = "hashicorp/kubernetes"
     }
   }
+  backend "gcs" {
+    bucket = "gke-sandbox-412119-tfstate"
+    prefix = "gke/state"
+  }  
   required_version = ">= 0.13"
 }
