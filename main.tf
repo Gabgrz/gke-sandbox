@@ -26,6 +26,65 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(module.gke.ca_certificate)
 }
 
+/*****************************************
+  Enable GCP APIs
+ *****************************************/
+
+module "enables-google-apis" {
+  source  = "terraform-google-modules/project-factory/google//modules/project_services"
+  version = "6.0.0"
+
+  project_id = var.project_id
+
+  activate_apis = [
+    "iam.googleapis.com",
+    "cloudresourcemanager.googleapis.com",
+    "compute.googleapis.com",
+    "containerregistry.googleapis.com",
+    "container.googleapis.com",
+    "storage-component.googleapis.com",
+    "logging.googleapis.com",
+    "monitoring.googleapis.com",
+  ]
+}
+
+/*****************************************
+  Create VPC Network
+ *****************************************/
+
+module "vpc" {
+  source  = "terraform-google-modules/network/google"
+  version = "~> 2.0"
+
+  project_id   = var.project_id
+  network_name = var.network
+
+  subnets = [
+    {
+      subnet_name   = var.subnetwork
+      subnet_ip     = "10.0.0.0/17"
+      subnet_region = var.region
+    },
+  ]
+
+  secondary_ranges = {
+    "${var.subnetwork}" = [
+      {
+        range_name    = var.ip_range_pods
+        ip_cidr_range = "192.168.0.0/18"
+      },
+      {
+        range_name    = var.ip_range_services
+        ip_cidr_range = "192.168.64.0/18"
+      },
+    ]
+  }
+}
+
+/*****************************************
+  Create GKE cluster
+ *****************************************/
+
 module "gke" {
   source  = "terraform-google-modules/kubernetes-engine/google"
   version = "~> 29.0"
@@ -34,8 +93,8 @@ module "gke" {
   name                        = "${local.cluster_type}-cluster${var.cluster_name_suffix}"
   regional                    = true
   region                      = var.region
-  network                     = var.network
-  subnetwork                  = var.subnetwork
+  network                     = module.vpc.network
+  subnetwork                  = module.vpc.subnets[0]
   ip_range_pods               = var.ip_range_pods
   ip_range_services           = var.ip_range_services
   create_service_account      = false
