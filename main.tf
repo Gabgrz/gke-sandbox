@@ -30,9 +30,9 @@ provider "kubernetes" {
   Enable GCP APIs
  *****************************************/
 
-module "enables-google-apis" {
+module "project-services" {
   source  = "terraform-google-modules/project-factory/google//modules/project_services"
-  version = "6.0.0"
+  version = "~> 14.4"
 
   project_id = var.project_id
 
