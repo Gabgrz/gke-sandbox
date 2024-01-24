@@ -1,5 +1,6 @@
 project_id = "gke-sandbox-412119"
 region     = "us-east1-b"
+zones      = ["us-east1-b"]
 compute_engine_service_account = "775521556248-compute@developer.gserviceaccount.com"
 ip_range_pods   = "pods"
 ip_range_services	= "services"

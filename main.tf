@@ -93,6 +93,7 @@ module "gke" {
   name                        = "${local.cluster_type}-cluster${var.cluster_name_suffix}"
   regional                    = false
   region                      = var.region
+  zones                       = var.zones
   network                     = var.network
   subnetwork                  = var.subnetwork
   ip_range_pods               = var.ip_range_pods
