@@ -51,3 +51,7 @@ variable "enable_binary_authorization" {
   description = "Enable BinAuthZ Admission controller"
   default     = false
 }
+
+variable "tf_state_bucket" {
+  type    = string
+}
