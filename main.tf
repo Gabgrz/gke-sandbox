@@ -75,6 +75,7 @@ module "vpc" {
       },
       {
         range_name    = var.ip_range_services
+        ip_cidr_range = "192.168.64.0/18"
       },
     ]
   }
