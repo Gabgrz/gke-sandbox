@@ -91,8 +91,8 @@ module "gke" {
 
   project_id                  = var.project_id
   name                        = "${local.cluster_type}-cluster${var.cluster_name_suffix}"
-  regional                    = true
-  region                      = var.region
+  regional                    = false
+  zones                       = var.region
   network                     = var.network
   subnetwork                  = var.subnetwork
   ip_range_pods               = var.ip_range_pods
