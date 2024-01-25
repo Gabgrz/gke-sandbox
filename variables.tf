@@ -27,6 +27,10 @@ variable "region" {
   description = "The region to host the cluster in"
 }
 
+variable "zones" {
+  description = "The zones to host the cluster in"
+}
+
 variable "network" {
   description = "The VPC network to host the cluster in"
 }
@@ -54,4 +58,13 @@ variable "enable_binary_authorization" {
 
 variable "tf_state_bucket" {
   type    = string
+}
+
+/*****************
+  Network
+ *****************/
+
+variable "subnet_ip" {
+  description = "IP range for the subnet"
+  default     = "10.10.10.0/24"
 }
