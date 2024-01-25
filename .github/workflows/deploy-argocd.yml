@@ -1,0 +1,29 @@
+name: Deploy Argo CD to GKE
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@master
+      with:
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        service_account_key: ${{ secrets.GOOGLE_CREDENTIALS }}
+        export_default_credentials: true
+
+    - name: Configure kubectl
+      run: |-
+        gcloud container clusters get-credentials hub-sandbox-cluster --zone us-east1-b --project ${{ secrets.GCP_PROJECT_ID }}
+
+    - name: Create Argo CD namespace
+      run: kubectl create namespace argocd
+
+    - name: Deploy Argo CD
+      run: kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
