@@ -92,6 +92,7 @@ module "gke" {
   project_id                  = var.project_id
   name                        = "${local.cluster_type}-cluster${var.cluster_name_suffix}"
   kubernetes_version	        = "1.27.7-gke.1121000"
+  release_channel             = "UNSPECIFIED"
   regional                    = false
   zones                       = var.zones
   network                     = var.network
