@@ -91,6 +91,7 @@ module "gke" {
 
   project_id                  = var.project_id
   name                        = "${local.cluster_type}-cluster${var.cluster_name_suffix}"
+  kubernetes_version	        = "1.27.7-gke.1121000"
   regional                    = false
   region                      = var.region
   zones                       = var.zones
@@ -104,4 +105,20 @@ module "gke" {
   enable_binary_authorization = var.enable_binary_authorization
   gcs_fuse_csi_driver         = true
   deletion_protection         = false
+  config_connector            = true
+  remove_default_node_pool    = true
+
+  // Define the node pool configuration
+  node_pools = [
+    {
+      name               = "simple-pool"
+      machine_type       = "e2-standard-2"
+      min_count          = 1         
+      max_count          = 1         
+      disk_size_gb       = 30        
+      disk_type          = "pd-standard"
+      auto_repair        = true
+      auto_upgrade       = false
+    }
+  ]
 }
