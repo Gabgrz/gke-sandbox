@@ -112,7 +112,7 @@ module "gke" {
  *****************************************/
 
 resource "google_service_account_iam_binding" "workload_identity_binding" {
-  service_account_id = "superadmin@gke-sandbox-412119.iam.gserviceaccount.com"
+  service_account_id = "projects/gke-sandbox-412119/serviceAccounts/superadmin@gke-sandbox-412119.iam.gserviceaccount.com"
   role               = "roles/iam.workloadIdentityUser"
 
   members = [
