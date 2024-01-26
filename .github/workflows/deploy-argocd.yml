@@ -26,33 +26,17 @@ jobs:
         curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
         echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
         sudo apt-get update && sudo apt-get install google-cloud-cli
-
     - name: Install gke-gcloud-auth-plugin
       run: |
         sudo apt-get install -y google-cloud-sdk-gke-gcloud-auth-plugin   
-
     - name: Configure kubectl
       run: |-
         gcloud container clusters get-credentials hub-sandbox-cluster --zone us-east1-b --project ${{ secrets.GCP_PROJECT_ID }}
-
-    - name: Clone hub-cluster-addons repository
-      uses: actions/checkout@v2
-      with:
-        repository: Gabgrz/hub-cluster-addons
-        path: ./hub-cluster-addons  # Clones the repo to a 'hub-cluster-addons' directory at the same level as the gke-sandbox
-        ref: main  # Explicitly check out the main branch
-        
     - name: Create Argo CD namespace
       run: kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
 
-    #- name: Deploy Argo CD
-      #run: kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.1/manifests/install.yaml
-
-    - name: Apply Kustomization from the cloned repository
-      run: kubectl apply -k hub-cluster-addons/argocd      
+    - name: Deploy Argo CD
+      run: kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.1/manifests/install.yaml
 
     - name: Load balance Argo CD
       run: kubectl patch svc argocd-server -n argocd -p '{"spec":{"type":"LoadBalancer"}}'
-
-
-
