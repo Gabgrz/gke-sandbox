@@ -30,6 +30,7 @@ module "project-services" {
     "logging.googleapis.com",
     "monitoring.googleapis.com",
     "secretmanager.googleapis.com",
+    "sqladmin.googleapis.com",
   ]
 }
 
