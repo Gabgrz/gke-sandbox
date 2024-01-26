@@ -40,6 +40,7 @@ jobs:
       with:
         repository: Gabgrz/hub-cluster-addons
         path: ./hub-cluster-addons  # Clones the repo to a 'hub-cluster-addons' directory at the same level as the gke-sandbox
+        ref: main  # Explicitly check out the main branch
         
     - name: Create Argo CD namespace
       run: kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
