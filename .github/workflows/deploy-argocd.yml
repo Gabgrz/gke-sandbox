@@ -36,7 +36,7 @@ jobs:
         gcloud container clusters get-credentials hub-sandbox-cluster --zone us-east1-b --project ${{ secrets.GCP_PROJECT_ID }}
 
     - name: Create Argo CD namespace
-      run: kubectl create namespace argocd
+      run: kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
 
     - name: Deploy Argo CD
       run: kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.1/manifests/install.yaml
