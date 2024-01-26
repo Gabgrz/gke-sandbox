@@ -122,3 +122,15 @@ module "gke" {
     }
   ]
 }
+
+/*****************************************
+  Configure Workload Identity
+ *****************************************/
+
+resource "google_service_account_iam_binding" "workload_identity_binding" {
+  service_account_id = "superadmin@gke-sandbox-412119.iam.gserviceaccount.com"
+  role               = "roles/iam.workloadIdentityUser"
+
+  members = [
+    "serviceAccount:gke-sandbox-412119.svc.id.goog[cnrm-system/cnrm-controller-manager]"
+  ]
