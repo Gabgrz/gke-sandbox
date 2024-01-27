@@ -1,4 +1,4 @@
-# Simple Regional Cluster
+# Simple Zonal Cluster
 
 This example illustrates how to create a simple cluster.
 
