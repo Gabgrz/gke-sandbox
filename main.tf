@@ -104,7 +104,7 @@ module "gke" {
       disk_size_gb       = 30        
       disk_type          = "pd-standard"
       auto_repair        = true
-      auto_upgrade       = false
+      auto_upgrade       = true
     }
   ]
 }
