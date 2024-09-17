@@ -78,9 +78,9 @@ module "gke" {
   project_id                  = var.project_id
   name                        = "${local.cluster_type}-cluster${var.cluster_name_suffix}"
   #kubernetes_version	        = "1.30.1-gke.1156000"
-  release_channel             = "RAPID"
-  regional                    = false
-  zones                       = var.zones
+  release_channel             = "REGULAR"
+  regional                    = true
+  #zones                       = var.zones
   network                     = var.network
   subnetwork                  = var.subnetwork
   ip_range_pods               = var.ip_range_pods
@@ -99,14 +99,21 @@ module "gke" {
     {
       name               = "simple-pool"
       machine_type       = "e2-standard-2"
-      min_count          = 1         
-      max_count          = 1         
+      min_count          = 3         
+      max_count          = 3         
       disk_size_gb       = 30        
       disk_type          = "pd-standard"
       auto_repair        = true
       auto_upgrade       = true
     }
   ]
+}
+
+module "hub" {
+  source           = "terraform-google-modules/kubernetes-engine/google//modules/fleet-membership"
+
+  project_id       = "module.gke.project_id"
+  cluster_name     = "module.gke.name"
 }
 
 /*****************************************
