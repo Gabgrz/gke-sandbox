@@ -128,3 +128,4 @@ resource "google_service_account_iam_binding" "workload_identity_binding" {
     "serviceAccount:gke-sandbox-412119.svc.id.goog[cnrm-system/cnrm-controller-manager]"
   ]
 }
+
