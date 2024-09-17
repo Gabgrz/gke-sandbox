@@ -79,8 +79,9 @@ module "gke" {
   name                        = "${local.cluster_type}-cluster${var.cluster_name_suffix}"
   #kubernetes_version	        = "1.30.1-gke.1156000"
   release_channel             = "REGULAR"
-  regional                    = true
-  #zones                       = var.zones
+  location                    = "var.region"
+  #regional                   = true
+  #zones                      = var.zones
   network                     = var.network
   subnetwork                  = var.subnetwork
   ip_range_pods               = var.ip_range_pods
