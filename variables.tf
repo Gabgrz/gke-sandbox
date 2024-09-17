@@ -23,13 +23,13 @@ variable "cluster_name_suffix" {
   default     = ""
 }
 
-#variable "region" {
-#  description = "The region to host the cluster in"
-#}
-
-variable "zones" {
-  description = "The zones to host the cluster in"
+variable "region" {
+  description = "The region to host the cluster in"
 }
+
+#variable "zones" {
+#  description = "The zones to host the cluster in"
+#}
 
 variable "network" {
   description = "The VPC network to host the cluster in"
