@@ -130,3 +130,4 @@ resource "google_service_account_iam_binding" "workload_identity_binding" {
   ]
 }
 
+
