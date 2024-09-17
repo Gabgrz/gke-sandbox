@@ -114,6 +114,7 @@ module "hub" {
 
   project_id       = "module.gke.project_id"
   cluster_name     = "module.gke.name"
+  location         = "module.gke.region"
 }
 
 /*****************************************
